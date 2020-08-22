@@ -1,0 +1,28 @@
+# auto-generated files
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+.factorypath
+.DS_Store
+
+# intermediate files
+node_modules/
+package-lock.json
+yarn.lock
+
+target/
+build/
+tomcat.**
+
+*.log
+
+dist/
+lib/
+
+
+# hidden files
+bak/
+-bak/
+
