@@ -1,17 +1,17 @@
-# react-quickstart-typescript
+# react-starter-ts
 
 > quickstart boilerplate for react using typescript
 
 ## features
 
-- almost minimal
+- minimal
 - built with react + typescript + babel + webpack from scratch
 - support react fast refresh(hot reloading)
 
 ## quickstart
 
 ``` shell
-yarn 
-yarn run demo
+npm i
+npm run start
 ```
 - open http://localhost:8999/

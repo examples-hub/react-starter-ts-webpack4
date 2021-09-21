@@ -11,3 +11,11 @@ insert_final_newline = true
 
 [*.md]
 trim_trailing_whitespace = false
+
+[makefile]
+indent_size = 2
+indent_style = space
+
+[*.sh]
+indent_size = 2
+indent_style = space

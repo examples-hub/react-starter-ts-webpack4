@@ -1,32 +1,31 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es5",
-    "sourceMap": true,
+    "jsx": "react",
     "allowJs": false,
-    "jsx": "preserve",
+    "checkJs": false,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
     "moduleResolution": "node",
-    "rootDir": "src",
+    "lib": ["dom", "es2015", "es2016", "es2017", "esnext"],
+    "experimentalDecorators": false,
+    "noImplicitAny": false,
+    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noImplicitAny": false,
     "noUnusedLocals": false,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "rootDir": "src",
     "removeComments": true,
     "declaration": true,
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "importHelpers": true,
-    "pretty": true,
-    "lib": ["es2015", "esnext", "dom"]
+    "pretty": true
   },
-  "exclude": [
-    "node_modules/**/*",
-    "src/**/*.tests.tsx",
-    "src/**/*.stories.tsx",
-    "bak/**/*"
-  ]
+  "exclude": ["node_modules/**/*", "bak/**/*"]
 }

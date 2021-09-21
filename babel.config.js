@@ -1,27 +1,37 @@
 module.exports = function (api) {
   // 若build依赖于env，就不要再指定api.cache为forever或never了
-  const env = api.env();
   // api.cache(true);
+
+  const env = api.env();
+  // const isProd = api.env('production');
+
+  function checkAppEnv(env) {
+    return (
+      process.env.REACT_APP_ENV &&
+      process.env.REACT_APP_ENV.toLowerCase().indexOf(env) !== -1
+    );
+  }
+
+  // 用在react应用开发调试阶段，会启用@babel/preset-react、react-refresh/babel
+  const isEnvReactFresh = checkAppEnv('reactfresh');
+  // 用在react项目打包阶段，会启用@babel/preset-react，而不会启用react-refresh/babel
+  const isEnvReact = checkAppEnv('react');
+  console.log(';;process.env.REACT_APP_ENV, ', process.env.REACT_APP_ENV);
+  console.log(';;isEnvReact, ', isEnvReact);
 
   // Plugins run before Presets. Plugin ordering is first to last.
   const plugins = [
-    [
-      'babel-plugin-styled-components',
-      {
-        displayName: true,
-        fileName: true,
-      },
-    ],
-    'react-refresh/babel',
-    ['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }],
-  ];
+    ['@babel/plugin-proposal-class-properties', { loose: false }],
+    '@babel/proposal-object-rest-spread',
+    isEnvReactFresh && 'react-refresh/babel',
+  ].filter(Boolean);
 
   function configModule() {
-    if (env === 'test' || env === 'cjs') {
-      return 'commonjs';
+    if (env === 'esm' || env === 'es6') {
+      return false;
     }
-    // 默认会编译成esm
-    return false;
+    // 默认会编译成node自身的commonjs
+    return 'auto';
   }
 
   // Preset ordering is reversed (last to first).
@@ -29,29 +39,36 @@ module.exports = function (api) {
     [
       '@babel/preset-env',
       {
-        // modules: env === 'esm' ? false : 'commonjs',
+        // modules: env === 'esm' ? false : 'auto',
         modules: configModule(),
-        targets: {
-          node: 'current',
-          // browsers: '> 0.5%',
-        },
-        corejs: { version: 3, proposals: true },
+        targets: 'defaults',
+        // targets: '> 0.25%, not dead',
         useBuiltIns: 'usage',
+        corejs: { version: 3, proposals: true },
         debug: false,
       },
     ],
     [
-      '@babel/preset-react',
-      { development: process.env.BABEL_ENV !== 'production' },
-    ],
-    [
       '@babel/preset-typescript',
       {
+        // later: 支持其他框架的jsx
+        isTSX: !!isEnvReact,
         allExtensions: true,
-        isTSX: true,
+        onlyRemoveTypeImports: true,
+        allowNamespaces: true,
+        allowDeclareFields: true,
       },
     ],
-  ];
+    isEnvReact && [
+      '@babel/preset-react',
+      {
+        // runtime: 'automatic',
+        development: env !== 'production',
+      },
+    ],
+  ].filter(Boolean);
+
+  // console.log('babel-presets, ', JSON.stringify(presets));
 
   const ignore = ['node_modules'];
 
