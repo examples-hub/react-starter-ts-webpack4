@@ -1,4 +1,4 @@
-# react-starter-ts
+# react-starter-ts-webpack4
 
 > quickstart boilerplate for react using typescript
 

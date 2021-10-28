@@ -41,20 +41,26 @@ module.exports = {
       // Fonts
       {
         test: /\.(ttf|eot|woff|woff2)$/,
-        // loader: 'file-loader',
-        type: 'asset/resource',
-        // generator: {
-        //   filename: 'fonts/[hash].[ext]',
-        // },
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'fonts/[hash].[ext]',
+            },
+          },
+        ],
       },
       // Files
       {
         test: /\.(jpg|jpeg|png|gif|svg|ico)$/,
-        // loader: 'file-loader',
-        type: 'asset/resource',
-        // generator: {
-        //   filename: 'static/[hash].[ext]',
-        // },
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'staticI/[hash].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.js$/,
@@ -68,8 +74,8 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     // alias: {},
   },
-  experiments: {
-    topLevelAwait: true,
-  },
-  ignoreWarnings: [/Failed to parse source map/],
+  // experiments: {
+  //   topLevelAwait: true,
+  // },
+  // ignoreWarnings: [/Failed to parse source map/],
 };
